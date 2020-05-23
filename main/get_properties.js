@@ -2,12 +2,14 @@ const realtor = require('realtorca');
 const fs = require('fs');
 
 let opts = {
-	LongitudeMin: -79.6758985519409,
-	LongitudeMax: -79.6079635620117,
-	LatitudeMin: 43.57601549736786,
-	LatitudeMax: 43.602250137362276,
-	PriceMin: 100000,
-	PriceMax: 410000
+	LongitudeMin: -82.9758985519409,
+	LongitudeMax: -75.347015,
+	LatitudeMin: 40.07601549736786,
+	LatitudeMax: 45.651070,
+	PriceMin: 0,
+	PriceMax: 1000000000,
+	TransactionTypeId:2 ## for sale
+	MaximumResults: 100000000
 };
 
 realtor.post(opts)
