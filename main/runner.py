@@ -6,17 +6,29 @@ import openpyxl
 from model import *
 #import openpyxl
 
+
 def main():
-    # Run NodeJS script to call MLS API and retrieve properties
-    response = muterun_js("get_properties.js")
+    # Get properties in given location range and price range
+    df = get_properties()
+
+
+def get_properties(min_price=100000, max_price=2000000,
+                   min_lat=43.5890, max_lat=44.0384,
+                   min_long=-79.2000, max_long=-79.6441):
+    # Form command string
+    command = "get_properties.js --minLong=" + str(min_long) + " --maxLong=" + str(max_long) + " --minLat=" \
+              + str(min_lat) + " --maxLat=" + str(max_lat) + " --minPrice=" + str(min_price) + " --maxPrice=" \
+              + str(max_price)
+
+    print(command)
+
+    response = muterun_js(command)
     if response.exitcode != 0:
         sys.stderr.write(response.stderr)
         return 1
 
-    # Read output.json file and create dataframe
     json_data = json.load(open('output.json'))
-    df = pd.DataFrame(json_data['Results'])
-    print(df)
+    return pd.DataFrame(json_data['Results'])
 
     # Export to Excel using Pandas
     #df.to_excel(r'C:\Users\76411\Documents\E\Project\PropertyAnalysis\propertydata.xlsx',sheet_name='df1')
